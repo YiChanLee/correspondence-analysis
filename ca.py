@@ -6,61 +6,64 @@ class CA:
 
     def __init__(self, n_components=None):
         """Corresondence analysis (CA)
-    Linear dimensionality reduction using Singular Value Decomposition of the
-    data to project it to a lower dimensional space.
+        Linear dimensionality reduction using Singular Value Decomposition of
+        the data to project it to a lower dimensional space.
 
-    Parameters
-    ----------
-    n_components : int
-        Number of components to keep.
-        if n_components is None all components with nonzero variance are kept:
-            n_components = (singular values array > 1e-16).sum()
+        Parameters
+        ----------
+        n_components : int
+            Number of components to keep.
+            if n_components is None all components with nonzero variance are
+            kept:
+                n_components = (singular values array > 1e-16).sum()
 
-    Attributes
-    ----------
-    grand_total_ : int
-        Total number of sample points (observations).
-    row_masses_ : array, [n_row_vars]
-        Sample-estimated probability distribution of row variables.
-    col_masses_ : array, [n_col_vars]
-        Sample-estimated probability distribution of col variables.
-    corrspnd_mat_ : array, [n_row_vars, n_col_vars]
-        Correspondence matrix. A sample-estimated join probability distribution
-        of row and col variables.
-    centr_corrspnd_mat_ : array, [n_row_vars, n_col_vars]
-        Relative frequency matrix. Centered correspondence matrix with elements
-        be centered at their independent joint probabilities.
-    chi_squared_ : float
-        Pearson's chi-squared statistics.
-    pearson_resd_ : array, [n_row_vars, n_col_vars]
-        Pearson residual matrix
-    principal_inertias_ : array, [n_components]
-        Principal inertias, variance of principal components.
-    princpl_coords_row_ : array, [n_row_vars, n_components]
-        Principal coordinates of row variables.
-    princpl_coords_col_ : array, [n_col_vars, n_components]
-        Principal coordinates of col variables.
-    std_coords_row_ = array, [n_row_vars, n_components]
-        Standard coordinates of row variables.
-    std_coords_col_ = array, [n_col_vars, n_components]
-        Standard coordinates of col variables.
+        Attributes
+        ----------
+        grand_total_ : int
+            Total number of sample points (observations).
+        row_masses_ : array, [n_row_vars]
+            Sample-estimated probability distribution of row variables.
+        col_masses_ : array, [n_col_vars]
+            Sample-estimated probability distribution of col variables.
+        corrspnd_mat_ : array, [n_row_vars, n_col_vars]
+            Correspondence matrix. A sample-estimated join probability
+            distribution of row and col variables.
+        centr_corrspnd_mat_ : array, [n_row_vars, n_col_vars]
+            Relative frequency matrix. Centered correspondence matrix with
+            elements be centered at their independent joint probabilities.
+        chi_squared_ : float
+            Pearson's chi-squared statistics.
+        pearson_resd_ : array, [n_row_vars, n_col_vars]
+            Pearson residual matrix
+        principal_inertias_ : array, [n_components]
+            Principal inertias, variance of principal components.
+        princpl_coords_row_ : array, [n_row_vars, n_components]
+            Principal coordinates of row variables.
+        princpl_coords_col_ : array, [n_col_vars, n_components]
+            Principal coordinates of col variables.
+        std_coords_row_ = array, [n_row_vars, n_components]
+            Standard coordinates of row variables.
+        std_coords_col_ = array, [n_col_vars, n_components]
+            Standard coordinates of col variables.
 
-    References
-    ----------
-    Alan J. Izenman, Modern Multivariate Statistical Techniques:
+        References
+        ----------
+        Alan J. Izenman
+        Modern Multivariate Statistical Techniques:
         Regression, Classification, and Manifold Learning
 
-    Michael Greenacre, Correspondence Analysis in Practice, Third Edition
-    Appendix A: Theory of Correspondence Analysis
+        Michael Greenacre
+        Correspondence Analysis in Practice, Third Edition
+        Appendix A: Theory of Correspondence Analysis
 
-    Oleg Nenadic and Michael Greenacre, Computation of Multiple Correspondence
-    Analysis, with code in R
-    https://core.ac.uk/download/pdf/6591520.pdf
+        Oleg Nenadic and Michael Greenacre
+        Computation of Multiple Correspondence Analysis, with code in R
+        https://core.ac.uk/download/pdf/6591520.pdf
 
-    Examples
-    --------
-    see test_ca.py and test_mca.py
-    """
+        Examples
+        --------
+        see test_ca.py and test_mca.py
+        """
         # total number of components to be kept
         self.n_components = n_components
 
@@ -137,6 +140,8 @@ class CA:
         self.princpl_coords_col_ = princpl_coords_col[:, :self.n_components]
         self.std_coords_row_ = std_coords_row
         self.std_coords_col_ = std_coords_col
+
+        return self
 
     def get_princpl_coords_df(self, row_categories=None, col_categories=None):
         """Get the pandas.DataFrame of principal coordinates
