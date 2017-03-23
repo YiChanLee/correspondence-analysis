@@ -195,3 +195,13 @@ class CA:
                                    columns=inds_col,
                                    index=col_categories)
         return row_stds_df, col_stds_df
+
+    def transform(self, supp_points, row=True):
+        if row:
+            row_masses = supp_points.sum(axis=1)
+            row_masses_inv = np.diag(1 / row_masses)
+            return row_masses_inv @ supp_points @ self.std_coords_col_
+        else:
+            col_masses = supp_points.sum(axis=0)
+            col_masses_inv = np.diag(1 / col_masses)
+            return col_masses_inv @ supp_points.T @ self.std_coords_row_
