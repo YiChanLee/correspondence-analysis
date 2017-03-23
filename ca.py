@@ -67,7 +67,7 @@ class CA:
         # total number of components to be kept
         self.n_components = n_components
 
-    def fit(self, contingency_table):
+    def fit(self, contingency_table, y=None):
         """Fit the model with X.
         Parameters
         ----------
