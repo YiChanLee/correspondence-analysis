@@ -79,6 +79,8 @@ class CA:
         self : object
             Returns the instance itself.
         """
+        if type(contingency_table) is pd.DataFrame:
+            contingency_table = contingency_table.values
         # total number of sample points
         grand_total = contingency_table.sum().sum()
 
@@ -104,16 +106,13 @@ class CA:
         # Pearson's residuals
         pearson_resd = Dr_sqrt_inv @ centr_corrspnd_mat @ Dc_sqrt_inv
 
-        U, D_lamb, V_T = np.linalg.svd(pearson_resd)
+        U, D_lamb, V_T = np.linalg.svd(pearson_resd, full_matrices=False)
 
         # pricipal inertias a.k.a. variance of variables
         principal_inertias = D_lamb ** 2
 
         # make 1D array of singular values into a 2D array
-        # D_lamb_mat.shape = contingency_table.shape
-        min_size = np.min(contingency_table.shape)
-        D_lamb_mat = np.zeros(contingency_table.shape)
-        D_lamb_mat[:min_size, :min_size] = np.diag(D_lamb)
+        D_lamb_mat = np.diag(D_lamb)
 
         # principal coordinates of row and col variables
         princpl_coords_row = Dr_sqrt_inv @ U @  D_lamb_mat

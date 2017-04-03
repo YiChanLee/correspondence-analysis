@@ -12,11 +12,9 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
-
 transfer = ca.CA()
 
 house_tasks = pd.read_csv('./datasets/house_tasks.csv', index_col=0)
-print(house_tasks.head())
 
 transfer.fit(house_tasks)
 
@@ -43,16 +41,13 @@ for i, txt in enumerate(var_text):
                 verticalalignment='center')
 sns.plt.show()
 
-
 fig, ax = sns.plt.subplots()
 sns.regplot('Dim 0', 'Dim 1', data=pcs_row, fit_reg=False, ax=ax)
 sns.regplot('Dim 0', 'Dim 1', data=pcs_col, fit_reg=False, ax=ax)
 for i, txt in enumerate(list(house_tasks.index)):
-    ax.annotate(txt + ' eyes',
-                (pcs_row.iloc[i]['Dim 0'], pcs_row.iloc[i]['Dim 1']))
+    ax.annotate(txt, (pcs_row.iloc[i]['Dim 0'], pcs_row.iloc[i]['Dim 1']))
 for i, txt in enumerate(list(house_tasks.columns)):
-    ax.annotate(txt + ' hair',
-                (pcs_col.iloc[i]['Dim 0'], pcs_col.iloc[i]['Dim 1']))
+    ax.annotate(txt, (pcs_col.iloc[i]['Dim 0'], pcs_col.iloc[i]['Dim 1']))
 ax.set_xlabel('Dim 0')
 ax.set_ylabel('Dim 1')
 sns.plt.show()
